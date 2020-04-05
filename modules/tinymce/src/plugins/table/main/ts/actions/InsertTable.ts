@@ -43,6 +43,7 @@ const insert = (editor: Editor, columns: number, rows: number): HTMLElement => {
     percentages: isPercentage(defaultStyles.width) && !isPixelsForced(editor)
   };
 
+  // Journey / JotterPad: Add header here?
   const table = TableRender.render(rows, columns, 0, 0, options);
   Attr.set(table, 'data-mce-id', '__mce');
 

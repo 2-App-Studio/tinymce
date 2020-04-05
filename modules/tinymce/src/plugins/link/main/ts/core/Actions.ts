@@ -111,4 +111,5 @@ export default {
   setupGotoLinks,
   toggleActiveState,
   toggleEnabledState,
+  getSelectedLink
 };
