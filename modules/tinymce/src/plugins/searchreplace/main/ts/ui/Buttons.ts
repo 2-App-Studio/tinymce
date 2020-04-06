@@ -19,7 +19,8 @@ const showDialog = function (editor: Editor, currentSearchState: Cell<SearchStat
 const register = function (editor: Editor, currentSearchState: Cell<SearchState>) {
   editor.ui.registry.addMenuItem('searchreplace', {
     text: 'Find and replace...',
-    shortcut: 'Meta+F',
+    // Journey / JotterPad
+    shortcut: '', // 'Meta+F',
     onAction: showDialog(editor, currentSearchState),
     icon: 'search'
   });
@@ -30,7 +31,8 @@ const register = function (editor: Editor, currentSearchState: Cell<SearchState>
     icon: 'search'
   });
 
-  editor.shortcuts.add('Meta+F', '', showDialog(editor, currentSearchState));
+  // Journey / JotterPad
+  // editor.shortcuts.add('Meta+F', '', showDialog(editor, currentSearchState));
 };
 
 export default {
