@@ -34,7 +34,7 @@ const get = function (editor: Editor) {
         const parents = tableCellIndex !== -1 ? e.parents.slice(0, tableCellIndex) : e.parents;
         const lists = Tools.grep(parents, NodeType.isListNode);
         callback(lists.length > 0 && [ 'ul', 'ol' ].indexOf(lists[0].nodeName.toLowerCase()) >= 0 && !isCustomList(lists[0]),
-        lists.length > 0 ? lists[0].nodeName.toLowerCase() : '');
+          lists.length > 0 ? lists[0].nodeName.toLowerCase() : '');
       };
       editor.on('NodeChange', nodeChangeHandler);
     }
