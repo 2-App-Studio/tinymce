@@ -96,5 +96,6 @@ export {
   leftClickedOnAHref,
   setupGotoLinks,
   toggleActiveState,
-  toggleEnabledState
+  toggleEnabledState,
+  getSelectedLink
 };

@@ -107,7 +107,9 @@ const moveSelection = function (editor: Editor, currentSearchState: Cell<SearchS
   const spans = findSpansByIndex(editor, testIndex);
   if (spans.length) {
     dom.addClass(findSpansByIndex(editor, testIndex), 'mce-match-marker-selected');
-    editor.selection.scrollIntoView(spans[0]);
+    // Journey / Jotterpad
+    // editor.selection.scrollIntoView(spans[0]);
+    spans[0].scrollIntoView();
     return testIndex;
   }
 

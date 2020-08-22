@@ -27,6 +27,23 @@ const setup = function (editor: Editor, patternsState: Cell<PatternSet>) {
   }, true);
 
   editor.on('keyup', function (e: EditorEvent<KeyboardEvent>) {
+    try {
+      // Journey/JotterPad: Added to handle Android Chromium bug
+      if (e.keyCode === 229) {
+        const range = editor.selection.getRng();
+        const proceed = range && range.collapsed && range.endOffset && range.endContainer &&
+        range.endContainer.nodeName === '#text' &&
+        range.endContainer.textContent;
+        if (proceed) {
+          const lastKeycode = range.endContainer.textContent.charCodeAt(range.endOffset - 1);
+          if (lastKeycode === 32 || lastKeycode === 160) {
+            KeyHandler.handleInlineKey(editor, patternsState.get());
+            return;
+          }
+        }
+      }
+    } catch (err) {
+    }
     if (KeyHandler.checkKeyCode(keyCodes, e)) {
       KeyHandler.handleInlineKey(editor, patternsState.get());
     }
