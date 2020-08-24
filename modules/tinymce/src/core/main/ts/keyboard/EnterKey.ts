@@ -6,17 +6,18 @@
  */
 
 import { KeyboardEvent } from '@ephox/dom-globals';
-// import * as InsertNewLine from '../newline/InsertNewLine';
+import * as InsertNewLine from '../newline/InsertNewLine';
 import VK from '../api/util/VK';
 import Editor from '../api/Editor';
 import { EditorEvent } from '../api/util/EventDispatcher';
 import { endTypingLevelIgnoreLocks } from '../undo/TypingState';
-// import { PlatformDetection } from '@ephox/sand';
+import { PlatformDetection } from '@ephox/sand';
+import Delay from 'tinymce/core/api/util/Delay';
 
 // Journey / JotterPad: Safari bug - Check iPhone / Safari
-// const platform = PlatformDetection.detect();
-// const isSafari = platform.browser.isSafari();
-// const isIOS = platform.os.isiOS();
+const platform = PlatformDetection.detect();
+const isSafari = platform.browser.isSafari();
+const isIOS = platform.os.isiOS();
 
 const handleEnterKeyEvent = function (editor: Editor, event: EditorEvent<KeyboardEvent>) {
   if (event.isDefaultPrevented()) {
@@ -24,20 +25,20 @@ const handleEnterKeyEvent = function (editor: Editor, event: EditorEvent<Keyboar
   }
 
   // Journey / JotterPad: Safari bug - Return key not auto-capitalize first letter
-  // if (isSafari || isIOS) {
-  endTypingLevelIgnoreLocks(editor.undoManager);
-  // } else {
-  //   event.preventDefault();
-
-  //   endTypingLevelIgnoreLocks(editor.undoManager);
-  //   editor.undoManager.transact(function () {
-  //     if (editor.selection.isCollapsed() === false) {
-  //       editor.execCommand('Delete');
-  //     }
-
-  //     InsertNewLine.insert(editor, event);
-  //   });
-  // }
+  if (isSafari || isIOS) {
+    endTypingLevelIgnoreLocks(editor.undoManager);
+  } else {
+    event.preventDefault();
+    endTypingLevelIgnoreLocks(editor.undoManager);
+    editor.undoManager.transact(function () {
+      if (editor.selection.isCollapsed() === false) {
+        editor.execCommand('Delete');
+      }
+      Delay.setEditorTimeout(editor, function () {
+        InsertNewLine.insert(editor, event);
+      });
+    });
+  }
 };
 
 const setup = function (editor: Editor) {

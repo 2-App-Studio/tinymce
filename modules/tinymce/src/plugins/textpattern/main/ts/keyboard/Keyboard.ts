@@ -37,7 +37,9 @@ const setup = function (editor: Editor, patternsState: Cell<PatternSet>) {
         if (proceed) {
           const lastKeycode = range.endContainer.textContent.charCodeAt(range.endOffset - 1);
           if (lastKeycode === 32 || lastKeycode === 160) {
-            KeyHandler.handleInlineKey(editor, patternsState.get());
+            Delay.setEditorTimeout(editor, function () {
+              KeyHandler.handleInlineKey(editor, patternsState.get());
+            });
             return;
           }
         }
@@ -45,7 +47,9 @@ const setup = function (editor: Editor, patternsState: Cell<PatternSet>) {
     } catch (err) {
     }
     if (KeyHandler.checkKeyCode(keyCodes, e)) {
-      KeyHandler.handleInlineKey(editor, patternsState.get());
+      Delay.setEditorTimeout(editor, function () {
+        KeyHandler.handleInlineKey(editor, patternsState.get());
+      });
     }
   });
 
