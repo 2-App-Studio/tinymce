@@ -36,7 +36,7 @@ const handleEnterKeyEvent = function (editor: Editor, event: EditorEvent<Keyboar
       }
       Delay.setEditorTimeout(editor, function () {
         InsertNewLine.insert(editor, event);
-      });
+      }, 10);
     });
   }
 };

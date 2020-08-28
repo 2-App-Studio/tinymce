@@ -20,6 +20,7 @@ import Editor from '../api/Editor';
 import * as PageBreakDelete from '../delete/ImageBlockDelete';
 import { EditorEvent } from '../api/util/EventDispatcher';
 import * as Outdent from '../delete/Outdent';
+import Delay from 'tinymce/core/api/util/Delay';
 
 const executeKeydownOverride = function (editor: Editor, caret: Cell<Text>, evt: KeyboardEvent) {
   MatchKeys.execute([
@@ -55,13 +56,18 @@ const executeKeyupOverride = function (editor: Editor, evt: KeyboardEvent) {
 const setup = function (editor: Editor, caret: Cell<Text>) {
   editor.on('keydown', function (evt: EditorEvent<KeyboardEvent>) {
     if (evt.isDefaultPrevented() === false) {
-      executeKeydownOverride(editor, caret, evt);
+      Delay.setEditorTimeout(editor, function () {
+        executeKeydownOverride(editor, caret, evt);
+      }, 1);
     }
   });
 
   editor.on('keyup', function (evt: EditorEvent<KeyboardEvent>) {
     if (evt.isDefaultPrevented() === false) {
       executeKeyupOverride(editor, evt);
+      Delay.setEditorTimeout(editor, function () {
+        executeKeyupOverride(editor, evt);
+      }, 1);
     }
   });
 };

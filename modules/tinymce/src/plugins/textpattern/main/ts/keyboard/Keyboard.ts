@@ -39,7 +39,7 @@ const setup = function (editor: Editor, patternsState: Cell<PatternSet>) {
           if (lastKeycode === 32 || lastKeycode === 160) {
             Delay.setEditorTimeout(editor, function () {
               KeyHandler.handleInlineKey(editor, patternsState.get());
-            });
+            }, 1);
             return;
           }
         }
@@ -49,7 +49,7 @@ const setup = function (editor: Editor, patternsState: Cell<PatternSet>) {
     if (KeyHandler.checkKeyCode(keyCodes, e)) {
       Delay.setEditorTimeout(editor, function () {
         KeyHandler.handleInlineKey(editor, patternsState.get());
-      });
+      }, 1);
     }
   });
 
@@ -57,7 +57,7 @@ const setup = function (editor: Editor, patternsState: Cell<PatternSet>) {
     if (KeyHandler.checkCharCode(charCodes, e)) {
       Delay.setEditorTimeout(editor, function () {
         KeyHandler.handleInlineKey(editor, patternsState.get());
-      });
+      }, 1);
     }
   });
 };
