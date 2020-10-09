@@ -7,7 +7,7 @@
 *.xap binary
 *.zip binary
 *.eot binary
-*.woff binary
+*.otf binary
 *.ttf binary
 *.mov binary
 *.avi binary

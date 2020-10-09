@@ -19,7 +19,7 @@
     "build/skins/content/**/*.css.map",
     "build/skins/ui/**/*.css",
     "build/skins/ui/**/*.css.map",
-    "build/skins/ui/**/*.woff",
+    "build/skins/ui/**/*.otf",
     "src/less/**/*",
     "src/svg/**/*",
     "src/fonts/**/*",

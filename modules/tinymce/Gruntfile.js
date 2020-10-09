@@ -349,7 +349,7 @@ module.exports = function (grunt) {
           'js/tinymce/langs',
           'js/tinymce/plugins',
           'js/tinymce/skins/**/*.min.css',
-          'js/tinymce/skins/**/*.woff',
+          'js/tinymce/skins/**/*.otf',
           'js/tinymce/icons',
           'js/tinymce/themes',
           'js/tinymce/tinymce.min.js',
