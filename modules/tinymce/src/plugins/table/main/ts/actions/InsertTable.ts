@@ -43,8 +43,7 @@ const insert = (editor: Editor, columns: number, rows: number, colHeaders: numbe
     attributes: getDefaultAttributes(editor)
   };
 
-  // Journey / JotterPad: Add header here?
-  const table = TableRender.render(rows, columns, 0, 0, getTableHeaderType(editor), options);
+  const table = TableRender.render(rows, columns, rowHeaders, colHeaders, getTableHeaderType(editor), options);
   Attr.set(table, 'data-mce-id', '__mce');
 
   const html = Html.getOuter(table);
