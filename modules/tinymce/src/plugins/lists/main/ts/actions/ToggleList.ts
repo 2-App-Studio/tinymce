@@ -271,6 +271,7 @@ const toggleSingleList = function (editor, parentList, listName, detail) {
 };
 
 const toggleList = function (editor, listName, detail) {
+  // TODO: Journey prevent list invalid children?
   const parentList = Selection.getParentList(editor);
   const selectedSubLists = Selection.getSelectedSubLists(editor);
 
