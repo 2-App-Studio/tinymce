@@ -271,7 +271,6 @@ const toggleSingleList = function (editor, parentList, listName, detail) {
 };
 
 const toggleList = function (editor, listName, detail) {
-  // TODO: Journey prevent list invalid children?
   const parentList = Selection.getParentList(editor);
   const selectedSubLists = Selection.getSelectedSubLists(editor);
 
@@ -280,7 +279,11 @@ const toggleList = function (editor, listName, detail) {
   if (parentList && selectedSubLists.length > 0) {
     toggleMultipleLists(editor, parentList, selectedSubLists, listName, detail);
   } else {
-    toggleSingleList(editor, parentList, listName, detail);
+    // Journey prevent list invalid children?
+    const tabooParents = editor.dom.getParents(editor.selection.getStart(), 'BLOCKQUOTE,PRE');
+    if (tabooParents.length === 0) {
+      toggleSingleList(editor, parentList, listName, detail);
+    }
   }
 };
 
