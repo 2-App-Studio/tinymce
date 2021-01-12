@@ -18,6 +18,7 @@ import Delay from 'tinymce/core/api/util/Delay';
 const platform = PlatformDetection.detect();
 const isSafari = platform.browser.isSafari();
 const isIOS = platform.os.isiOS();
+const isAndroid = platform.os.isAndroid();
 
 const handleEnterKeyEvent = function (editor: Editor, event: EditorEvent<KeyboardEvent>) {
   if (event.isDefaultPrevented()) {
@@ -47,6 +48,23 @@ const setup = function (editor: Editor) {
       handleEnterKeyEvent(editor, event);
     }
   });
+  // Journey / JotterPad: Android Keyboard bug https://github.com/ckeditor/ckeditor4/issues/4409
+  if (isAndroid) {
+    editor.on('compositionend', function (event: any) {
+      if (event.data && event.data.length && event.data[event.data.length - 1] === '\n') {
+        let currNode = editor.selection.getNode();
+        if (currNode) {
+          currNode = currNode.closest('p');
+          if (currNode && currNode.nextSibling && currNode.nextSibling.nodeName === 'P') {
+            const range = editor.dom.createRng();
+            range.setStart(currNode.nextSibling, 0);
+            range.collapse(true);
+            editor.selection.setRng(range);
+          }
+        }
+      }
+    });
+  }
 };
 
 export {
