@@ -13,6 +13,11 @@ import Delay from 'tinymce/core/api/util/Delay';
 import VK from 'tinymce/core/api/util/VK';
 import { PatternSet } from '../core/PatternTypes';
 import * as KeyHandler from './KeyHandler';
+import { PlatformDetection } from '@ephox/sand';
+
+// Journey / JotterPad: Safari bug - Check iPhone / Safari
+const platform = PlatformDetection.detect();
+const isAndroid = platform.os.isAndroid();
 
 const setup = function (editor: Editor, patternsState: Cell<PatternSet>) {
   const charCodes = [ ',', '.', ';', ':', '!', '?' ];
@@ -60,6 +65,15 @@ const setup = function (editor: Editor, patternsState: Cell<PatternSet>) {
       }, 1);
     }
   });
+
+  // Journey / JotterPad: Android Keyboard bug https://github.com/ckeditor/ckeditor4/issues/4409
+  if (isAndroid) {
+    editor.on('compositionend', function (event: any) {
+      if (event.data && event.data.length && event.data[event.data.length - 1] === '\n') {
+        KeyHandler.handleEnter(editor, patternsState.get());
+      }
+    });
+  }
 };
 
 export {
